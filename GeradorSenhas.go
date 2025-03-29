@@ -9,12 +9,18 @@ import (
 	"time"
 )
 
-func gerarSenha(comprimento int, usarMaiusculas, usarNumeros, usarSimbolos bool) string {
+func gerarSenha(comprimento int, usarMaiusculas, usarMinusculas, usarNumeros, usarSimbolos bool) string {
 	var caracteres []rune
 	caracteres = append(caracteres, 'a', 'z')
 
 	if usarMaiusculas {
 		for i := 'A'; i <= 'Z'; i++ {
+			caracteres = append(caracteres, i)
+		}
+	}
+
+	if usarMinusculas {
+		for i := 'a'; i <= 'z'; i++ {
 			caracteres = append(caracteres, i)
 		}
 	}
@@ -53,6 +59,10 @@ func main() {
 	incluirMaiusculas, _ := reader.ReadString('\n')
 	incluirMaiusculas = strings.TrimSpace(incluirMaiusculas)
 
+	fmt.Print("Deseja incluir letras minúsculas? (s/n): ")
+	incluirMinusculas, _ := reader.ReadString('\n')
+	incluirMinusculas = strings.TrimSpace(incluirMinusculas)
+
 	fmt.Print("Deseja incluir números? (s/n): ")
 	incluirNumeros, _ := reader.ReadString('\n')
 	incluirNumeros = strings.TrimSpace(incluirNumeros)
@@ -62,9 +72,10 @@ func main() {
 	incluirSimbolos = strings.TrimSpace(incluirSimbolos)
 
 	usarMaiusculas := incluirMaiusculas == "s"
+	usarMinusculas := incluirMinusculas == "s"
 	usarNumeros := incluirNumeros == "s"
 	usarSimbolos := incluirSimbolos == "s"
 
-	senha := gerarSenha(comprimento, usarMaiusculas, usarNumeros, usarSimbolos)
+	senha := gerarSenha(comprimento, usarMaiusculas, usarMinusculas, usarNumeros, usarSimbolos)
 	fmt.Printf("\nSua senha gerada é: %s\n", senha)
 }
